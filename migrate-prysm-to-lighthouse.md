@@ -62,17 +62,25 @@ $ sudo rm lighthouse-v1.4.0-x86_64-unknown-linux-gnu.tar.gz
 
 This is step 9 of the [Somer Esat guide for Lighthouse](https://someresat.medium.com/guide-to-staking-on-ethereum-2-0-ubuntu-lighthouse-41de20513b12). We are skipping step 8 of the guide until later. Like before, you should reference the guide but here is a trimmed down version.
 
-1. Set up the Beacon Node Account and Directory
+1. Create a data directory for lighthouse
+
+```
+$ sudo mkdir -p /var/lib/lighthouse
+$ sudo chown -R <yourusername>:<yourusername> /var/lib/lighthouse
+```
+
+> Changing the ownership of the lighthouse directory is necessary for a later step
+
+2. Set up the Beacon Node Account and Directory
 
 ```
 $ sudo useradd --no-create-home --shell /bin/false lighthousebeacon
 $ sudo mkdir -p /var/lib/lighthouse/beacon
 $ sudo chown -R lighthousebeacon:lighthousebeacon /var/lib/lighthouse/beacon
 $ sudo chmod 700 /var/lib/lighthouse/beacon
-$ ls -dl /var/lib/lighthouse/beacon
 ```
 
-2. Create the Lighthouse Beacon node systemd service file
+3. Create the Lighthouse Beacon node systemd service file
 
 ```
 $ sudo nano /etc/systemd/system/lighthousebeacon.service
@@ -100,7 +108,7 @@ WantedBy=multi-user.target
 
 > Check the guide or the official documentation for additional flags/settings
 
-3. Start the Lighthouse Beacon node and enable the service to automatically start
+4. Start the Lighthouse Beacon node and enable the service to automatically start
 
 Running two beacon nodes at the same time is fine. This will not cause a slashing event.
 
@@ -123,14 +131,7 @@ $ sudo journalctl -fu lighthousebeacon.service
 
 This section uses parts of step 8 and 10 of the [Somer Esat guide for Lighthouse](https://someresat.medium.com/guide-to-staking-on-ethereum-2-0-ubuntu-lighthouse-41de20513b12). Like before, you should reference the guide but here is a trimmed down version.
 
-1. Create a directory to store the validator wallet data
-
-```
-$ sudo mkdir -p /var/lib/lighthouse
-$ sudo chown -R <yourusername>:<yourusername> /var/lib/lighthouse
-```
-
-2. Run the validator key import process (make sure the directory still exists and has your keys in them)
+1. Run the validator key import process (make sure the directory still exists and has your keys in them)
 
 ```
 $ cd /usr/local/bin
@@ -141,18 +142,23 @@ Provide the password you used when you created the validator keys initially.
 
 > If for some reason your keys are no longer on your machine, regenerate them by following either of the guides or other official documentation.
 
+2. Set default permissions to the parent lighthouse directory
+
+```
+$ sudo chown root:root /var/lib/lighthouse
+```
+
 3. Set up the Validator Node Account and Directory
 
 ```
 $ sudo useradd --no-create-home --shell /bin/false lighthousevalidator
 ```
 
-4. Set permissions for the wallet data to the new validator account
+4. Set permissions for the wallet data
 
 ```
 $ sudo chown -R lighthousevalidator:lighthousevalidator /var/lib/lighthouse/validators
 $ sudo chmod 700 /var/lib/lighthouse/validators
-$ ls -dl /var/lib/lighthouse/validators
 ```
 
 5. Create the Lighthouse Validator service systemd service file
@@ -227,13 +233,13 @@ $ validator slashing-protection export --datadir=/var/lib/prysm/validator --slas
 5. Check that your keys are in Lighthouse
 
 ```
-$ lighthouse account validator list --data-dir=/var/lib/lighthouse
+$ sudo lighthouse account validator list --datadir=/var/lib/lighthouse
 ```
 
 6. Import the slashing protection history into Lighthouse
 
 ```
-$ lighthouse account validator slashing-protection import $HOME/slashprotection/slashing_protection.json --datadir=/var/lib/lighthouse
+$ sudo lighthouse account validator slashing-protection import $HOME/slashprotection/slashing_protection.json --datadir=/var/lib/lighthouse
 ```
 
 7. Start the Lighthouse Validator node and enable the service to automatically start
@@ -268,7 +274,7 @@ $ cd /usr/local/bin
 $ sudo rm validator beaconchain
 ```
 
-3. Remove the relevant directories
+3. Remove the prysm directory
 
 ```
 $ sudo rm -r /var/lib/prysm
@@ -286,5 +292,5 @@ $ sudo systemctl daemon-reload
 
 ```
 $ sudo ufw delete allow 13000/tcp
-$ sudo ufw delete allow 12000/tcp
+$ sudo ufw delete allow 12000/udp
 ```
