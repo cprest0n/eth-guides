@@ -1,5 +1,3 @@
-> **WARNING: THIS HAS NOT YET BEEN REVIEWED OR TESTED! USE AT YOUR OWN RISK**
-
 # How to switch from Prysm to Lighthouse
 
 This guide will help those that want to migrate off the Prysm Beacon and Validator nodes that they have setup using the Somer Esat guides for [Staking on Ubuntu/Prysm](https://someresat.medium.com/guide-to-staking-on-ethereum-2-0-ubuntu-prysm-56f681646f74). This guide assumes you have followed the guide exactly and your machine is currently running Geth and Prysm. This guide will follow (and copy from) the [Staking on Ubuntu/Lighthouse](https://someresat.medium.com/guide-to-staking-on-ethereum-2-0-ubuntu-lighthouse-41de20513b12) guide. I was inspired by this [article](https://lighthouse.sigmaprime.io/switch-to-lighthouse.html) but wanted to make a detailed guide for myself and others to follow.
