@@ -29,13 +29,13 @@ You can follow the entirety of step 7 of the [Somer Esat guide for Lighthouse](h
 ```
 $ cd ~
 $ sudo apt install curl
-$ curl -LO https://github.com/sigp/lighthouse/releases/download/v1.4.0/lighthouse-v1.4.0-x86_64-unknown-linux-gnu.tar.gz
+$ curl -LO https://github.com/sigp/lighthouse/releases/download/v2.0.0/lighthouse-v2.0.0-x86_64-unknown-linux-gnu.tar.gz
 ```
 
 3. Extract and copy to `/usr/local/bin`
 
 ```
-$ tar xvf lighthouse-v1.4.0-x86_64-unknown-linux-gnu.tar.gz
+$ tar xvf lighthouse-v2.0.0-x86_64-unknown-linux-gnu.tar.gz
 $ sudo cp lighthouse /usr/local/bin
 ```
 
@@ -53,7 +53,7 @@ $ ./lighthouse --version # <-- should display version information
 ```
 $ cd ~
 $ sudo rm lighthouse
-$ sudo rm lighthouse-v1.4.0-x86_64-unknown-linux-gnu.tar.gz
+$ sudo rm lighthouse-v2.0.0-x86_64-unknown-linux-gnu.tar.gz
 ```
 
 ## Configure the Lighthouse Beacon node Service
